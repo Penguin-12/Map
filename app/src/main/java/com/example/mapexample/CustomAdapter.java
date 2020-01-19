@@ -49,18 +49,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.textView.setText(list.get(position).name);
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chatActivityIntent = new Intent(context, ChatActivity.class);
-                chatActivityIntent.putExtra("Name", list.get(position).name);
-                chatActivityIntent.putExtra("Position", position);
 
-                context.startActivity(chatActivityIntent);
-
-
-            }
-        });
 
 
     }

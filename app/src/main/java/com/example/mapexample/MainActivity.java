@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     Intent chatActivityIntent;
     private GoogleMap mMap;
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -51,11 +52,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -71,6 +72,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "hey").allowMainThreadQueries().build();
 
         list = appDatabase.contactClassDao().getAllContacts();
+
 
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -95,6 +97,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(Location location) {
                 mMap.clear();
+
 
 
                 addPins();
@@ -159,10 +162,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location lastKnownlocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            LatLng userLocation = new LatLng(lastKnownlocation.getLatitude(), lastKnownlocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).position(userLocation).title("Your Location")).setTag(102);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
+            if (lastKnownlocation != null) {
+                LatLng userLocation = new LatLng(lastKnownlocation.getLatitude(), lastKnownlocation.getLongitude());
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).position(userLocation).title("Your Location")).setTag(102);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            }
 
         }
 
@@ -173,11 +177,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 if (Integer.parseInt(marker.getTag().toString()) != 101 && Integer.parseInt(marker.getTag().toString()) != 102) {
                     chatActivityIntent = new Intent(getApplicationContext(), ChatActivity.class);
                     chatActivityIntent.putExtra("Name", list.get((Integer) marker.getTag()).name);
+                    chatActivityIntent.putExtra("Position", marker.getTag().toString());
                     startActivity(chatActivityIntent);
                 }
                 return false;
             }
         });
+
 
 
     }

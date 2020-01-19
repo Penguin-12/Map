@@ -39,8 +39,8 @@ public class AddContact extends AppCompatActivity {
                 } else {
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "hey").allowMainThreadQueries().build();
-                    appDatabase.contactClassDao().insertContact(new ContactClass(nameEditText.getText().toString(), Double.parseDouble(latitudeEditText.getText().toString()), Double.parseDouble(longitudeEditText.getText().toString()), count));
-                    count++;
+                    appDatabase.contactClassDao().insertContact(new ContactClass(nameEditText.getText().toString(), Double.parseDouble(latitudeEditText.getText().toString()), Double.parseDouble(longitudeEditText.getText().toString()), list.size()));
+
                     startActivity(intent);
 
                 }

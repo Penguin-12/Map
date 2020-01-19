@@ -1,18 +1,13 @@
 package com.example.mapexample;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -31,21 +26,21 @@ public class ChatActivity extends AppCompatActivity {
     List<ContactClass> list;
     int position;
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.item1) {
-            appDatabase.contactClassDao().deleteContact(list.get(position));
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.item1) {
+//            appDatabase.contactClassDao().deleteContact(list.get(position));
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_file, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.menu_file, menu);
+//        return true;
+//    }
 
 
     @Override
@@ -58,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
 
         username = getIntent().getStringExtra("Name");
-
+        position = Integer.parseInt(getIntent().getStringExtra("Position"));
 
         setTitle("" + username);
         arrayList = new ArrayList<>();
